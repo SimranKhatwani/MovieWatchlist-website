@@ -82,181 +82,173 @@ const searchMovies = async (e) => {
 
   return (
     <div className='min-h-screen bg-gray-900'>
-      <nav className='flex flex-row items-center shadow-2xl shadow-black/80'>
-         <h1 className='text-white text-3xl font-bold mt-2 mx-6  tracking-wide whitespace-nowrap'>Movie WatchList</h1>
-        
-        <div className='text-white flex space-x-6 text-2xl font-semibold mx-210 mt-2'>
-         
-        <button 
-        onClick={()=> navigate('/Watchlist')}
-        className='hover:text-white'>
-          Watchlist
-        </button>
+     <nav className="flex items-center justify-between shadow-2xl shadow-black/80 px-6 py-2">
+  <h1 className="text-white text-3xl font-bold tracking-wide whitespace-nowrap">
+    Movie WatchList
+  </h1>
 
-        <button
-        onClick={()=> navigate('/')}
-        className='hover:text-white whitespace-nowrap'
-       >
-          Log Out
-        </button>
-         </div>
-      </nav>
+  <div className="flex items-center space-x-6 text-white text-2xl font-semibold">
+    <button 
+      onClick={() => navigate('/Watchlist')}
+      className="hover:text-white">
+      Watchlist
+    </button>
 
-         {/* Search bar */}
-      <div className="p-6">
-      <form onSubmit={searchMovies} className="flex gap-2 mb-6">
-        <input
-          type="text"
-          placeholder="🔍  Search for a movie, TV shows..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className=" w-100 rounded-lg text-white text-xl placeholder-gray-400 bg-gray-900 border border-gray-700 shadow-lg mt-10 ml-120 px-10 py-3"
+    <button
+      onClick={() => navigate('/')}
+      className="hover:text-white whitespace-nowrap">
+      Log Out
+    </button>
+  </div>
+</nav>
+
+<div className="p-6">
+  {/* Search bar */}
+  <form onSubmit={searchMovies} className="flex justify-center mb-6 mt-10 px-4">
+    <input
+      type="text"
+      placeholder="🔍 Search for a movie, TV shows..."
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+      className="
+        w-full
+        max-w-xl
+        rounded-lg
+        text-white
+        text-xl
+        placeholder-gray-400
+        bg-gray-900
+        border
+        border-gray-700
+        shadow-lg
+        px-4
+        py-3
+      "
+    />
+  </form>
+
+  {/* Search results */}
+  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+    {results.map((movie) => (
+      <div key={movie.id} className="bg-gray-900 p-2 rounded">
+        <img
+          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          alt={movie.title}
+          className="rounded mb-2 w-full h-auto object-cover"
         />
-         
-      </form>
-
-      {/* Search results */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        {results.map((movie) => (
-          <div key={movie.id} className="bg-gray-900 p-2 rounded">
-            <img
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt={movie.title}
-              className="rounded mb-2"
-            />
-            <p className="text-white text-sm">{movie.title}</p>
-
-            <button
-        onClick={() => {
-          addToWatchlist(movie);
-          alert("✅ Added to Watchlist!");
-        }}
-        className="mt-2 w-full bg-red-600 text-white text-sm py-1 rounded hover:bg-red-700 transition"
-      >
-        + Add to Watchlist
-      </button>
-
-          </div>
-        ))}
+        <p className="text-white text-sm truncate">{movie.title}</p>
+        <button
+          onClick={() => {
+            addToWatchlist(movie);
+            alert("✅ Added to Watchlist!");
+          }}
+          className="mt-2 w-full bg-red-600 text-white text-sm py-1 rounded hover:bg-red-700 transition"
+        >
+          + Add to Watchlist
+        </button>
       </div>
-    </div>
+    ))}
+  </div>
+</div>
 
+{/* Trending section */}
+<section className="px-4 md:px-8 mt-10">
+  <div className="flex flex-wrap items-baseline justify-between gap-2">
+    <h2 className="text-white font-semibold text-2xl mt-4">Trending Now on Netflix</h2>
+    <span className="text-xs text-gray-400">Region: IN</span>
+  </div>
 
+  {err && !loading && (
+    <p className="mt-4 text-sm text-red-400">{err}</p>
+  )}
 
+  {/* Scroll buttons */}
+  <button
+    onClick={() => scroll("left")}
+    className="absolute left-0 top-1/2 -translate-y-1/2 bg-black/60 text-white text-3xl p-4 rounded-full hover:bg-black z-10 hover:scale-110 shadow-lg"
+  >
+    ◀
+  </button>
+  <button
+    onClick={() => scroll("right")}
+    className="absolute right-0 top-1/2 -translate-y-1/2 bg-black/60 text-white text-3xl p-4 rounded-full hover:bg-black z-10 hover:scale-110 shadow-lg"
+  >
+    ▶
+  </button>
 
-      <section className="px-8 mt-10">
-        <div className="flex items-baseline justify-between">
-          <h2 className="text-white font-semibold text-2xl mt-10 ml-3">Trending Now on Netflix</h2>
-          <span className="text-xs text-gray-400">Region: IN</span>
-        </div>
-
-        
-
-        {/* error state */}
-        {err && !loading && (
-          <p className="mt-4 text-sm text-red-400">{err}</p>
-        )}
-
-        {/* Left Button */}
-        <button
-          onClick={() => scroll("left")}
-          className="absolute left-0 top-1/2 -translate-y-1/2 bg-black/60 text-white text-3xl p-4 rounded-full hover:bg-black z-10 hover:scale-110 shadow-lg"
-        >
-          ◀
-        </button>
-
-        {/* Right Button */}
-        <button
-          onClick={() => scroll("right")}
-          className="absolute right-0 top-1/2 -translate-y-1/2 bg-black/60 text-white text-3xl p-4 rounded-full hover:bg-black z-10 hover:scale-110 shadow-lg"
-        >
-          ▶
-        </button>
-
-        {/* posters */}
-        {!loading && !err && (
-          <div 
-          ref={scrollRef}
-          className="mt-4 flex space-x-4 overflow-x-hidden pb-4 scroll-smooth">
-            {trending.map((m) => {
-              const poster = m.poster_path
-                ? `${IMAGE_BASE}${POSTER_SIZE}${m.poster_path}`
-                : "https://via.placeholder.com/342x513?text=No+Poster";
-              return (
-                <div key={m.id} className="flex-shrink-0 w-40">
-                  <img
-                    src={poster}
-                    alt={m.title}
-                    className="w-40 h-60 object-cover rounded-xl shadow-lg hover:scale-105 transition-transform"
-                    loading="lazy"
-                  />
-                  <p className=" text-white mt-2 text-sm text-center truncate">{m.title}</p>
-                 
-             {/* Watchlist Button */}
+  {/* Posters */}
+  {!loading && !err && (
+    <div
+      ref={scrollRef}
+      className="mt-4 flex space-x-4 overflow-x-auto pb-4 scroll-smooth"
+    >
+      {trending.map((m) => {
+        const poster = m.poster_path
+          ? `${IMAGE_BASE}${POSTER_SIZE}${m.poster_path}`
+          : "https://via.placeholder.com/342x513?text=No+Poster";
+        return (
+          <div key={m.id} className="flex-shrink-0 w-40">
+            <img
+              src={poster}
+              alt={m.title}
+              className="w-40 h-60 object-cover rounded-xl shadow-lg hover:scale-105 transition-transform"
+              loading="lazy"
+            />
+            <p className="text-white mt-2 text-sm text-center truncate">{m.title}</p>
             <button
               onClick={() => {
-                 addToWatchlist(m); 
+                addToWatchlist(m);
                 alert("✅ Added to Watchlist!");
-                   }}
+              }}
               className="mt-2 w-full bg-red-600 text-white text-sm py-1 rounded hover:bg-red-700 transition"
-              >
-             + Add to Watchlist
-              </button>
-
-                
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </section>
-
-     
-       {/* Suggested for You Section */}
-<section>
-  <h2 className="text-white font-semibold text-3xl mt-10 ml-7 ">Suggested for You</h2>
-  <div className=" grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-    {suggested.map((movie) => (
-      <div 
-        key={movie.id} 
-        className="rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300"
-      >
-        <img 
-          src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`} 
-          alt={movie.title} 
-          className=" ml-7 mt-5 w-46 h-60 object-cover rounded-xl shadow-lg hover:scale-105 transition-transform" 
-        />
-        <p className=" text-white mt-2 text-md text-center truncate">
-          {movie.title}
-        </p>
-         <button
-               onClick={() => {
-              addToWatchlist(m); 
-             alert("✅ Added to Watchlist!");
-            }}
-            className="mt-2 w-full bg-red-600 text-white text-sm py-1 rounded hover:bg-red-700 transition"
-             >
+            >
               + Add to Watchlist
             </button>
+          </div>
+        );
+      })}
+    </div>
+  )}
+</section>
 
+{/* Suggested for You */}
+<section className="px-4 md:px-8">
+  <h2 className="text-white font-semibold text-3xl mt-10">Suggested for You</h2>
+  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-5">
+    {suggested.map((movie) => (
+      <div
+        key={movie.id}
+        className="rounded-xl overflow-hidden hover:scale-105 transition-transform duration-300"
+      >
+        <img
+          src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
+          alt={movie.title}
+          className="w-full h-60 object-cover rounded-xl shadow-lg"
+        />
+        <p className="text-white mt-2 text-md text-center truncate">
+          {movie.title}
+        </p>
+        <button
+          onClick={() => {
+            addToWatchlist(movie);
+            alert("✅ Added to Watchlist!");
+          }}
+          className="mt-2 w-full bg-red-600 text-white text-sm py-1 rounded hover:bg-red-700 transition"
+        >
+          + Add to Watchlist
+        </button>
       </div>
-
-
     ))}
   </div>
 </section>
 
-
-  {/* credit (TMDB requires this) */}
-      <footer className="px-8 py-10 text-xs text-gray-400">
-        This product uses the TMDB API but is not endorsed or certified by TMDB.
-      </footer>
-      
-
-
+{/* Credit */}
+<footer className="px-4 md:px-8 py-10 text-xs text-gray-400 text-center">
+  This product uses the TMDB API but is not endorsed or certified by TMDB.
+</footer>
     </div>
+
   )
 }
-
 export default Homepage
 
