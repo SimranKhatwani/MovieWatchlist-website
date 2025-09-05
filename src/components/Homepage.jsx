@@ -81,7 +81,7 @@ const searchMovies = async (e) => {
   
 
   return (
-    <div className='min-h-screen bg-gray-900'>
+    <div className=' w- full min-h-screen bg-gray-900'>
      <nav className="flex items-center justify-between shadow-2xl shadow-black/80 px-6 py-2">
   <h1 className="text-white text-3xl font-bold tracking-wide whitespace-nowrap">
     Movie WatchList
@@ -152,7 +152,7 @@ const searchMovies = async (e) => {
 </div>
 
 {/* Trending section */}
-<section className="px-4 md:px-8 mt-10">
+<section className=" w- full px-4 md:px-8 mt-10">
   <div className="flex flex-wrap items-baseline justify-between gap-2">
     <h2 className="text-white font-semibold text-2xl mt-4">Trending Now on Netflix</h2>
     <span className="text-xs text-gray-400">Region: IN</span>
@@ -212,7 +212,7 @@ const searchMovies = async (e) => {
 </section>
 
 {/* Suggested for You */}
-<section className="px-4 md:px-8">
+<section className=" w- full px-4 md:px-8">
   <h2 className="text-white font-semibold text-3xl mt-10">Suggested for You</h2>
   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-5">
     {suggested.map((movie) => (
@@ -243,7 +243,7 @@ const searchMovies = async (e) => {
 </section>
 
 {/* Credit */}
-<footer className="px-4 md:px-8 py-10 text-xs text-gray-400 text-center">
+<footer className=" w- full px-4 md:px-8 py-10 text-xs text-gray-400 text-center">
   This product uses the TMDB API but is not endorsed or certified by TMDB.
 </footer>
     </div>
